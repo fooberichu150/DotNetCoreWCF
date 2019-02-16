@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "DotNetCoreWCF.Client": {
+      "commandName": "Project"
+    }
+  }
+}
