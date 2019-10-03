@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>DotNetCoreWCF.GrpcHost</RootNamespace>
+    <AssemblyName>DotNetCoreWCF.GrpcHost</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.23.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetCoreWCF.Data\DotNetCoreWCF.Services.Data.csproj" />
+    <ProjectReference Include="..\DotNetCoreWCF.Logic\DotNetCoreWCF.Logic.csproj" />
+    <ProjectReference Include="..\DotNetCoreWCF.Proto\DotNetCoreWCF.Proto.csproj" />
+  </ItemGroup>
+
+</Project>

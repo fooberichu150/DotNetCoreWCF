@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
 using DotNetCoreWCF.Contracts.Model.Employees;
-using DotNetCoreWCF.Host.Store;
+using DotNetCoreWCF.Data.Store;
 using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreWCF.Host.Services

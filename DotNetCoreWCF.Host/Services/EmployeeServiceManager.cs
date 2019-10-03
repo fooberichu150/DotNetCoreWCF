@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Host.Configuration;
-using DotNetCoreWCF.Host.Store;
 using Microsoft.Extensions.Logging;
 using Unity;
 using Unity.Wcf;

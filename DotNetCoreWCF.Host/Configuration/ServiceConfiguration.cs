@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
+using DotNetCoreWCF.Data.Store;
 using DotNetCoreWCF.Host.Services;
-using DotNetCoreWCF.Host.Store;
 using Unity;
 using Unity.Lifetime;
 

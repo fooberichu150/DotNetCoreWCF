@@ -1,15 +1,19 @@
 ﻿using System;
-using System.IO;
-using DotNetCoreWCF.Client.Configuration;
+using System.Threading.Tasks;
+using DotNetCoreWCF.Grpc.Services;
+using Grpc.Net.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Unity;
+using System.IO;
+using DotNetCoreWCF.GrpcClient.Configuration;
+using AutoMapper;
+using DotNetCoreWCF.Logic.Configuration;
 
-namespace DotNetCoreWCF.Client
+namespace DotNetCoreWCF.GrpcClient
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			try
 			{
@@ -29,15 +33,17 @@ namespace DotNetCoreWCF.Client
 				IConfigurationRoot configuration = builder.Build();
 
 				var services = new ServiceCollection();
+
 				services.AddTransient<Application>();
 				services
+					.ConfigureAdapters()
 					.ConfigureLogging()
 					.RegisterEmployeeService(configuration);
 
 				var provider = services.BuildServiceProvider();
 
 				var application = provider.GetService<Application>();
-				application.Run();
+				await application.Run();
 			}
 			finally
 			{

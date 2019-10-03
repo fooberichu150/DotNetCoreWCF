@@ -119,14 +119,16 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\EmployeeServiceManager.cs" />
     <Compile Include="Services\ServiceHandler.cs" />
-    <Compile Include="Store\EmployeeStore.cs" />
-    <Compile Include="Store\LockDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetCoreWCF.Data\DotNetCoreWCF.Services.Data.csproj">
+      <Project>{F1B37C38-7D77-48C5-BD8F-0B3127505A9B}</Project>
+      <Name>DotNetCoreWCF.Services.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetCoreWCF.Model\DotNetCoreWCF.Model.csproj">
       <Project>{40e6aaa2-bb4d-4fd1-b923-4ba8faddd866}</Project>
       <Name>DotNetCoreWCF.Model</Name>

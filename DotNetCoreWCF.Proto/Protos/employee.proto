@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+option csharp_namespace = "DotNetCoreWCF.Grpc.Services";
+
+package Employees;
+
+// The employee service definition.
+service EmployeeService {
+  // Gets an employee
+  rpc Get (EmployeeRequest) returns (EmployeeResponse);
+  // Save/UpdateEmployee an employe
+  rpc UpdateEmployee (Employee) returns (Employee);
+  // Delete an employe
+  rpc Delete (DeleteEmployeeRequest) returns (DeleteEmployeeResponse);
+}
+
+// The request message containing the user's name.
+message EmployeeRequest {
+	google.protobuf.Int32Value employee_id = 1;
+	string first_name = 2;
+	string last_name = 3;
+	bool active_only = 4;
+}
+
+message DeleteEmployeeRequest {
+	google.protobuf.Int32Value employee_id = 1;
+}
+
+message DeleteEmployeeResponse {
+	int32 deleted_employee_id = 1;
+}
+
+message Employee {
+	int32 employee_id = 1;
+	string user_name = 2;
+	string first_name = 3;
+	string last_name = 4;
+	string middle_initial = 5;
+	string email_address=6;
+	string phone_number=7;
+	string title = 8;
+	bool is_active = 9;
+}
+
+// The response message containing the employee.
+message EmployeeResponse {
+	repeated Employee employees = 1;
+}

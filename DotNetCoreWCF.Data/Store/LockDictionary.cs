@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DotNetCoreWCF.Host.Store
+namespace DotNetCoreWCF.Data.Store
 {
 	public class LockDictionary<TKey, TValue>
 	{
