@@ -15,6 +15,8 @@ namespace DotNetCoreWCF.Host.Services
 
 		public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
 		{
+			_logger.LogInformation("Request from {0}", context.Peer);
+
 			return Task.FromResult(new HelloReply
 			{
 				Message = "Hello " + request.Name

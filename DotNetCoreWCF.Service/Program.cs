@@ -28,7 +28,7 @@ namespace DotNetCoreWCF.Host
 				.ConfigureServices((hostContext, services) =>
 				{
 					services.AddOptions();
-					services.Configure<AppConfig>(hostContext.Configuration.GetSection("AppConfig"));
+					services.Configure<ServerSettings>(hostContext.Configuration.GetSection("ServerSettings"));
 
 					services.AddSingleton<IHostedService, GrpcServiceHost>();
 					services.AddSingleton<IHostedService, EmployeeServiceManager>();

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DotNetCoreWCF.Host.Configuration
 {
-	public class AppConfig
+	public class ServerSettings
 	{
+		public string HostName { get; set; }
+		public int Port { get; set; }
 	}
 }

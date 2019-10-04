@@ -3,21 +3,26 @@ using DotNetCoreWCF.GrpcSample.Services;
 using DotNetCoreWCF.Logic.Adapters;
 using DotNetCoreWCF.Service.Core.Handlers;
 using Grpc.Core;
+using Microsoft.Extensions.Logging;
 using Unity;
 
 namespace DotNetCoreWCF.Host.Services
 {
 	public class EmployeeServiceEndpoint : GrpcSample.Services.EmployeeService.EmployeeServiceBase
 	{
-		public EmployeeServiceEndpoint(IUnityContainer container)
+		public EmployeeServiceEndpoint(IUnityContainer container, ILogger<EmployeeServiceEndpoint> logger)
 		{
 			Container = container;
+			Logger = logger;
 		}
 
 		private IUnityContainer Container { get; }
+		protected ILogger<EmployeeServiceEndpoint> Logger { get; }
 
 		public override Task<DeleteEmployeeResponse> Delete(DeleteEmployeeRequest request, ServerCallContext context)
 		{
+			Logger.LogInformation("{0} request from {1}", context.Method, context.Peer);
+
 			using (var scope = Container.CreateChildContainer())
 			{
 				var handler = scope.Resolve<IDeleteEmployeeRequestHandler>();
@@ -32,6 +37,8 @@ namespace DotNetCoreWCF.Host.Services
 
 		public override Task<EmployeeResponse> Get(EmployeeRequest request, ServerCallContext context)
 		{
+			Logger.LogInformation("{0} request from {1}", context.Method, context.Peer);
+
 			using (var scope = Container.CreateChildContainer())
 			{
 				var handler = scope.Resolve<IGetEmployeeRequestHandler>();
@@ -46,6 +53,8 @@ namespace DotNetCoreWCF.Host.Services
 
 		public override Task<Employee> UpdateEmployee(Employee request, ServerCallContext context)
 		{
+			Logger.LogInformation("{0} request from {1}", context.Method, context.Peer);
+
 			using (var scope = Container.CreateChildContainer())
 			{
 				var handler = scope.Resolve<IUpdateEmployeeRequestHandler>();

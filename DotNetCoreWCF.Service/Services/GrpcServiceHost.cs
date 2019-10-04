@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNetCoreWCF.Host.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace DotNetCoreWCF.Host.Services
 {
@@ -13,14 +15,17 @@ namespace DotNetCoreWCF.Host.Services
 	{
 
 		public GrpcServiceHost(IGrpcServiceEndpointRegistry endpointRegistry, 
+			IOptions<ServerSettings> serverSettings,
 			ILogger<GrpcServiceHost> logger)
 		{
 			EndpointRegistry = endpointRegistry;
+			ServerSettings = serverSettings;
 			Logger = logger;
 		}
 
 		protected IGrpcServiceEndpointRegistry EndpointRegistry { get; }
 		protected ILogger<GrpcServiceHost> Logger { get; }
+		protected IOptions<ServerSettings> ServerSettings { get; }
 		private Grpc.Core.Server _serverHost { get; set; }
 
 		public async Task StartAsync(CancellationToken cancellationToken)
@@ -40,8 +45,9 @@ namespace DotNetCoreWCF.Host.Services
 			// - drill into https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.0 from there 
 			// - then drill into CreateDefaultBuilder and ConfigureWebHostDefaults to see how it loads SSL by default)
 			// - see also: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-3.0#kestrel-options
+			var settings = ServerSettings.Value;
 			var credentials = Grpc.Core.ServerCredentials.Insecure; //new Grpc.Core.SslServerCredentials()
-			var serverPort = new Grpc.Core.ServerPort("localhost", 5001, credentials);
+			var serverPort = new Grpc.Core.ServerPort(settings.HostName, settings.Port, credentials);
 			_serverHost = new Grpc.Core.Server();
 
 			foreach (var serviceDefinition in EndpointRegistry.GetServiceDefinitions())
@@ -49,7 +55,7 @@ namespace DotNetCoreWCF.Host.Services
 			_serverHost.Ports.Add(serverPort);
 			_serverHost.Start();
 
-			Logger.LogInformation($"Service hosts listening at localhost:5001");
+			Logger.LogInformation($"Service hosts listening at {settings.HostName}:{settings.Port}");
 
 			return Task.CompletedTask;
 		}

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
 using DotNetCoreWCF.Contracts.Model.Employees;
+using DotNetCoreWCF.Service.Core.Handlers;
 using DotNetCoreWCF.Service.Core.Store;
 using Microsoft.Extensions.Logging;
 using Unity;
@@ -13,40 +14,43 @@ namespace DotNetCoreWCF.Host.Services
 {
 	public class EmployeeService : IEmployeeService
 	{
-		public EmployeeService(IUnityContainer container, IEmployeeStore employeeStore, ILogger logger)
+		public EmployeeService(ILogger logger, 
+			IDeleteEmployeeRequestHandler deleteEmployeeRequestHandler, 
+			IGetEmployeeRequestHandler getEmployeeRequestHandler, 
+			IUpdateEmployeeRequestHandler updateEmployeeRequestHandler)
 		{
-			Container = container;
-			EmployeeStore = employeeStore;
 			Logger = logger;
+			UpdateEmployeeRequestHandler = updateEmployeeRequestHandler;
+			GetEmployeeRequestHandler = getEmployeeRequestHandler;
+			DeleteEmployeeRequestHandler = deleteEmployeeRequestHandler;
 		}
 
 		protected IUnityContainer Container { get; }
 		protected IEmployeeStore EmployeeStore { get; }
 		protected ILogger Logger { get; }
+		protected IDeleteEmployeeRequestHandler DeleteEmployeeRequestHandler { get; }
+		protected IGetEmployeeRequestHandler GetEmployeeRequestHandler { get; }
+		protected IUpdateEmployeeRequestHandler UpdateEmployeeRequestHandler { get; }
 
 		public DeleteEmployeeResponse Delete(DeleteEmployeeRequest request)
 		{
-			var deletedEmployee = EmployeeStore.Delete(request.EmployeeId);
+			var response = DeleteEmployeeRequestHandler.Delete(request);
 
-			return new DeleteEmployeeResponse
-			{
-				DeletedEmployeeId = deletedEmployee?.EmployeeId
-			};
+			return response;
 		}
 
 		public EmployeeResponse Get(EmployeeRequest request)
 		{
-			var employees = EmployeeStore.Get(request);
+			var response = GetEmployeeRequestHandler.Get(request);
 
-			return new EmployeeResponse
-			{
-				Employees = employees.ToArray()
-			};
+			return response;
 		}
 
 		public Employee UpdateEmployee(Employee employee)
 		{
-			throw new NotImplementedException();
+			var response = UpdateEmployeeRequestHandler.Update(employee);
+
+			return response;
 		}
 	}
 }

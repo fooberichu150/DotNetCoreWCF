@@ -215,7 +215,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Configuration\ServerSettings.cs" />
     <Compile Include="Configuration\LoggingConfigurator.cs" />
     <Compile Include="Configuration\ServiceConfigurator.cs" />
     <Compile Include="Configuration\HostingExtensions.cs" />
