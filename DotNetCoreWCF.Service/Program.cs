@@ -1,44 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DotNetCoreWCF.Host.Configuration;
 using DotNetCoreWCF.Host.Services;
-using DotNetCoreWCF.Service.Core.Configuration;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Unity;
+using Unity.Microsoft.DependencyInjection;
 
 namespace DotNetCoreWCF.Host
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
-			var container = new Unity.UnityContainer();
-			container
-				.ConfigureLogging()
-				.ConfigureServices()
-				.RegisterHandlers();
+			var builder = new HostBuilder()
+				.ConfigureAppConfiguration((hostingContext, config) =>
+				{
+					config.AddJsonFile("appsettings.json", optional: true);
+					config.AddEnvironmentVariables();
 
-			var serviceManager = new EmployeeServiceManager(container);
-			serviceManager.StartHost();
+					if (args != null)
+					{
+						config.AddCommandLine(args);
+					}
+				})
+				.UseUnityServiceProvider()
+				.ConfigureServices((hostContext, services) =>
+				{
+					services.AddOptions();
+					services.Configure<AppConfig>(hostContext.Configuration.GetSection("AppConfig"));
 
-			var registry = new GrpcServiceEndpointRegistry(container);
+					services.AddSingleton<IHostedService, GrpcServiceHost>();
+					services.AddSingleton<IHostedService, EmployeeServiceManager>();
+				})
+				.ConfigureContainer<IUnityContainer>(c =>
+				{
+					c.RegisterHostedServices();
+				});
 
-			var credentials = Grpc.Core.ServerCredentials.Insecure;
-			//new Grpc.Core.SslServerCredentials()
-			var serverPort = new Grpc.Core.ServerPort("localhost", 5001, credentials);
-			var serverHost = new Grpc.Core.Server();
-			foreach (var serviceDefinition in registry.GetServiceDefinitions())
-				serverHost.Services.Add(serviceDefinition);
-			serverHost.Ports.Add(serverPort);
-			serverHost.Start();
-
-			Console.WriteLine($"Service hosts listening at localhost:5001");
-			Console.WriteLine("WCF Service Hosted Sucessfully");
-			Console.WriteLine("Press any key to exit");
-			Console.ReadKey();
-
-			serviceManager.StopHost();
+			await builder.RunConsoleAsync();
 		}
 	}
 }

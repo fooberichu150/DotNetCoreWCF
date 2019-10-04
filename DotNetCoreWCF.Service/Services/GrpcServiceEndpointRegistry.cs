@@ -7,7 +7,7 @@ using Unity;
 
 namespace DotNetCoreWCF.Host.Services
 {
-	public class GrpcServiceEndpointRegistry
+	public class GrpcServiceEndpointRegistry : IGrpcServiceEndpointRegistry
 	{
 		public GrpcServiceEndpointRegistry(IUnityContainer container)
 		{

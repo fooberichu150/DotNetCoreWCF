@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using DotNetCoreWCF.Contracts.Interfaces;
-using DotNetCoreWCF.GrpcSample.Services;
 using DotNetCoreWCF.GrpcClient.Proxies;
-using Microsoft.Extensions.Configuration;
+using DotNetCoreWCF.GrpcSample.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreWCF.GrpcClient.Configuration
 {
-	public static class EmployeeServiceConfiguration
+	public static class EmployeeClientConfiguration
 	{
-		public static IServiceCollection RegisterEmployeeService(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection RegisterEmployeeService(this IServiceCollection services)
 		{
-			// This switch must be set before creating the GrpcChannel/HttpClient.
+			// This switch must be set before creating the GrpcChannel/HttpClient if we aren't using SSL
 			AppContext.SetSwitch(
 				"System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
@@ -29,6 +25,7 @@ namespace DotNetCoreWCF.GrpcClient.Configuration
 			});
 
 			services.AddTransient<IEmployeeService, EmployeeClient>();
+			services.AddTransient<IEmployeeClientAsync, EmployeeClient>();
 
 			return services;
 		}

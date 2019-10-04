@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreWCF.GrpcHost.Services
 {
-	public class EmployeeServiceHost : EmployeeService.EmployeeServiceBase//, IEmployeeService
+	public class EmployeeServiceHost : EmployeeService.EmployeeServiceBase
 	{
 		public EmployeeServiceHost(ILogger<EmployeeServiceHost> logger, 
 			IServiceProvider serviceProvider)
@@ -24,7 +24,6 @@ namespace DotNetCoreWCF.GrpcHost.Services
 		protected IServiceProvider ServiceProvider { get; }
 
 		protected IGetEmployeeRequestHandler EmployeeRequestHandler { get; }
-		protected IMapper Mapper { get; }
 
 		public override Task<DeleteEmployeeResponse> Delete(DeleteEmployeeRequest request, ServerCallContext context)
 		{

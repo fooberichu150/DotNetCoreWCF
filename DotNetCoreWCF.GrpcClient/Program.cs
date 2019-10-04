@@ -1,13 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
-using DotNetCoreWCF.GrpcSample.Services;
-using Grpc.Net.Client;
+using DotNetCoreWCF.GrpcClient.Configuration;
+using DotNetCoreWCF.Logic.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using DotNetCoreWCF.GrpcClient.Configuration;
-using AutoMapper;
-using DotNetCoreWCF.Logic.Configuration;
 
 namespace DotNetCoreWCF.GrpcClient
 {
@@ -38,7 +35,7 @@ namespace DotNetCoreWCF.GrpcClient
 				services
 					.RegisterAdapters()
 					.ConfigureLogging()
-					.RegisterEmployeeService(configuration);
+					.RegisterEmployeeService();
 
 				var provider = services.BuildServiceProvider();
 

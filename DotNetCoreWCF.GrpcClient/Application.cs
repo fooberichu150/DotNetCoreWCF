@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DotNetCoreWCF.GrpcClient.Proxies;
 using DotNetCoreWCF.GrpcSample.Services;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
@@ -9,8 +10,8 @@ namespace DotNetCoreWCF.GrpcClient
 	public class Application
 	{
 		public Application(ILogger<Application> logger, 
-			Greeter.GreeterClient greeterClient, 
-			Contracts.Interfaces.IEmployeeService employeeService)
+			Greeter.GreeterClient greeterClient,
+			IEmployeeClientAsync employeeService)
 		{
 			Logger = logger;
 			GreeterClient = greeterClient;
@@ -19,11 +20,11 @@ namespace DotNetCoreWCF.GrpcClient
 
 		protected ILogger<Application> Logger { get; }
 		protected Greeter.GreeterClient GreeterClient { get; }
-		protected Contracts.Interfaces.IEmployeeService EmployeeService { get; }
+		protected IEmployeeClientAsync EmployeeService { get; }
 
 		public Task Run()
 		{
-			Task.WaitAll(RunGreeter(), RunEmployee());
+			Task.WaitAll(RunGreeter(), RunEmployeeAsync(), RunEmployee());
 
 			return Task.CompletedTask;
 		}
@@ -41,7 +42,7 @@ namespace DotNetCoreWCF.GrpcClient
 			Logger.LogInformation("*******************************");
 		}
 
-		private async Task RunEmployee()
+		private Task RunEmployee()
 		{
 			Logger.LogInformation("Running Employee gRPC Demo");
 			Logger.LogInformation("*******************************");
@@ -59,6 +60,30 @@ namespace DotNetCoreWCF.GrpcClient
 			finally
 			{
 				Logger.LogInformation("End Employee gRPC Demo");
+				Logger.LogInformation("*******************************");
+			}
+
+			return Task.CompletedTask;
+		}
+
+		private async Task RunEmployeeAsync()
+		{
+			Logger.LogInformation("Running Employee gRPC Demo (Async)");
+			Logger.LogInformation("*******************************");
+
+			try
+			{
+				var response = await EmployeeService.GetAsync(new Contracts.Model.Employees.EmployeeRequest { ActiveOnly = true });
+
+				Logger.LogInformation($"Employees found (async): {response?.Employees.Length}");
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, "Oh noes (async)!");
+			}
+			finally
+			{
+				Logger.LogInformation("End Employee gRPC Demo (Async)");
 				Logger.LogInformation("*******************************");
 			}
 		}

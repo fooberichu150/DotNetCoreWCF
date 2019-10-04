@@ -4,34 +4,43 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using DotNetCoreWCF.Host.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Unity;
 using Unity.Wcf;
 
 namespace DotNetCoreWCF.Host.Services
 {
-	public class EmployeeServiceManager
+	public class EmployeeServiceManager: IHostedService
 	{
 		private ServiceHost _employeeServiceHost = null;
 		private bool _alreadyLoggedSystemFault;
 		private bool _requestStop = false;
 
-		public EmployeeServiceManager()
-			:this(new UnityContainer())
-		{
-		}
-
-		public EmployeeServiceManager(IUnityContainer container)
+		public EmployeeServiceManager(IUnityContainer container, ILogger<EmployeeServiceManager> logger)
 		{
 			Container = container;
-
-			Logger = Container.Resolve<ILogger>();
+			Logger = logger;
 		}
 
 		public IUnityContainer Container { get; }
 		public Microsoft.Extensions.Logging.ILogger Logger { get; }
+
+		public Task StartAsync(CancellationToken cancellationToken)
+		{
+			StartEmployeeService();
+
+			return Task.CompletedTask;
+		}
+
+		public Task StopAsync(CancellationToken cancellationToken)
+		{
+			StopEmployeeService();
+
+			return Task.CompletedTask;
+		}
 
 		public void StartHost()
 		{

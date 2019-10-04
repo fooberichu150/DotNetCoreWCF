@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
 using DotNetCoreWCF.Contracts.Model.Employees;
 using DotNetCoreWCF.Logic.Adapters;
@@ -11,16 +7,16 @@ using GrpcModels = DotNetCoreWCF.GrpcSample.Services;
 
 namespace DotNetCoreWCF.GrpcClient.Proxies
 {
-	public interface IEmployeeClient: IEmployeeService
+	public interface IEmployeeClientAsync : IEmployeeService
 	{
 		Task<EmployeeResponse> GetAsync(EmployeeRequest request);
 		Task<DeleteEmployeeResponse> DeleteAsync(DeleteEmployeeRequest request);
 		Task<Employee> UpdateAsync(Employee employee);
 	}
 
-	public class EmployeeClient : IEmployeeService
+	public class EmployeeClient : IEmployeeClientAsync
 	{
-		public EmployeeClient(ILogger<EmployeeClient> logger, 
+		public EmployeeClient(ILogger<EmployeeClient> logger,
 			GrpcModels.EmployeeService.EmployeeServiceClient serviceClient,
 			IDeleteEmployeeRequestAdapter deleteEmployeeRequestAdapter,
 			IDeleteEmployeeResponseAdapter deleteEmployeeResponseAdapter,
@@ -68,6 +64,27 @@ namespace DotNetCoreWCF.GrpcClient.Proxies
 		public Employee UpdateEmployee(Employee employee)
 		{
 			var response = ServiceClient.UpdateEmployee(EmployeeAdapter.ToGrpc(employee));
+
+			return EmployeeAdapter.ToDomain(response);
+		}
+
+		public async Task<EmployeeResponse> GetAsync(EmployeeRequest request)
+		{
+			var response = await ServiceClient.GetAsync(EmployeeRequestAdapter.ToGrpc(request));
+
+			return EmployeeResponseAdapter.ToDomain(response);
+		}
+
+		public async Task<DeleteEmployeeResponse> DeleteAsync(DeleteEmployeeRequest request)
+		{
+			var response = await ServiceClient.DeleteAsync(DeleteEmployeeRequestAdapter.ToGrpc(request));
+
+			return DeleteEmployeeResponseAdapter.ToDomain(response);
+		}
+
+		public async Task<Employee> UpdateAsync(Employee employee)
+		{
+			var response = await ServiceClient.UpdateEmployeeAsync(EmployeeAdapter.ToGrpc(employee));
 
 			return EmployeeAdapter.ToDomain(response);
 		}

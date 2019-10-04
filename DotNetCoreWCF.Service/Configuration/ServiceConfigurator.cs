@@ -13,17 +13,18 @@ using Unity.Lifetime;
 
 namespace DotNetCoreWCF.Host.Configuration
 {
-	public static class ServiceConfiguration
+	public static class ServiceConfigurator
 	{
-		public static IUnityContainer ConfigureServices(this IUnityContainer container)
+		public static IUnityContainer RegisterHostedServices(this IUnityContainer container)
 		{
 			container
+				.ConfigureLogging()
 				.RegisterAdapters()
 				.RegisterHandlers();
 
-			container.RegisterSingleton<GreeterServiceEndpoint>();
-			container.RegisterSingleton<EmployeeServiceEndpoint>();
-
+			// used by Grpc
+			container.RegisterSingleton<IGrpcServiceEndpointRegistry, GrpcServiceEndpointRegistry>();
+			// used by WCF
 			container.RegisterType<IEmployeeService, EmployeeService>(new HierarchicalLifetimeManager());
 
 			return container;
