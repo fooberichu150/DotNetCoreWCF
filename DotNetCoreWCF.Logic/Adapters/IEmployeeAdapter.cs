@@ -4,7 +4,7 @@ namespace DotNetCoreWCF.Logic.Adapters
 {
 	public interface IEmployeeAdapter
 	{
-		Contracts.Model.Employees.Employee ToDomain(Grpc.Services.Employee source);
-		Grpc.Services.Employee ToGrpc(Contracts.Model.Employees.Employee source);
+		Contracts.Model.Employees.Employee ToDomain(GrpcSample.Services.Employee source);
+		GrpcSample.Services.Employee ToGrpc(Contracts.Model.Employees.Employee source);
 	}
 }

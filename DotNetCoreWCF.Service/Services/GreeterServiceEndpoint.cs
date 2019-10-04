@@ -3,12 +3,12 @@ using DotNetCoreWCF.GrpcSample.Services;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
-namespace DotNetCoreWCF.GrpcHost.Services
+namespace DotNetCoreWCF.Host.Services
 {
-	public class GreeterService : Greeter.GreeterBase
+	public class GreeterServiceEndpoint : Greeter.GreeterBase
 	{
-		private readonly ILogger<GreeterService> _logger;
-		public GreeterService(ILogger<GreeterService> logger)
+		private readonly ILogger _logger;
+		public GreeterServiceEndpoint(ILogger logger)
 		{
 			_logger = logger;
 		}

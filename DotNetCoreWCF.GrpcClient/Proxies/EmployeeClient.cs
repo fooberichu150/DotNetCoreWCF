@@ -7,7 +7,7 @@ using DotNetCoreWCF.Contracts.Interfaces;
 using DotNetCoreWCF.Contracts.Model.Employees;
 using DotNetCoreWCF.Logic.Adapters;
 using Microsoft.Extensions.Logging;
-using GrpcModels = DotNetCoreWCF.Grpc.Services;
+using GrpcModels = DotNetCoreWCF.GrpcSample.Services;
 
 namespace DotNetCoreWCF.GrpcClient.Proxies
 {

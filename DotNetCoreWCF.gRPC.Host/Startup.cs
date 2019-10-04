@@ -22,7 +22,7 @@ namespace DotNetCoreWCF.GrpcHost
 		{
 			services
 				.RegisterAdapters()
-				.RegisterServices();
+				.RegisterHandlers();
 
 			services.AddGrpc();
 		}

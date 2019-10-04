@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
-option csharp_namespace = "DotNetCoreWCF.Grpc.Services";
+option csharp_namespace = "DotNetCoreWCF.GrpcSample.Services";
 
 package Employees;
 

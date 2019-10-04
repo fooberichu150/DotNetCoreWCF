@@ -6,7 +6,7 @@ namespace DotNetCoreWCF.Logic.Adapters
 {
 	public interface IEmployeeRequestAdapter
 	{
-		Contracts.Model.Employees.EmployeeRequest ToDomain(Grpc.Services.EmployeeRequest source);
-		Grpc.Services.EmployeeRequest ToGrpc(Contracts.Model.Employees.EmployeeRequest source);
+		Contracts.Model.Employees.EmployeeRequest ToDomain(GrpcSample.Services.EmployeeRequest source);
+		GrpcSample.Services.EmployeeRequest ToGrpc(Contracts.Model.Employees.EmployeeRequest source);
 	}
 }

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using DotNetCoreWCF.Grpc.Services;
+using DotNetCoreWCF.GrpcSample.Services;
 using DotNetCoreWCF.Logic.Adapters;
 using DotNetCoreWCF.Service.Core.Handlers;
 using Grpc.Core;

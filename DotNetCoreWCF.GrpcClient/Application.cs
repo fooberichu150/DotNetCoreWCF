@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DotNetCoreWCF.Grpc.Services;
+using DotNetCoreWCF.GrpcSample.Services;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 

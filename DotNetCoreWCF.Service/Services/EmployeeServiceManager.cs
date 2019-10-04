@@ -14,21 +14,23 @@ namespace DotNetCoreWCF.Host.Services
 {
 	public class EmployeeServiceManager
 	{
-		private IUnityContainer _container = new UnityContainer();
 		private ServiceHost _employeeServiceHost = null;
 		private bool _alreadyLoggedSystemFault;
 		private bool _requestStop = false;
 
 		public EmployeeServiceManager()
+			:this(new UnityContainer())
 		{
-			Container
-				.ConfigureLogging()
-				.ConfigureServices();
+		}
+
+		public EmployeeServiceManager(IUnityContainer container)
+		{
+			Container = container;
 
 			Logger = Container.Resolve<ILogger>();
 		}
 
-		public IUnityContainer Container { get => _container; }
+		public IUnityContainer Container { get; }
 		public Microsoft.Extensions.Logging.ILogger Logger { get; }
 
 		public void StartHost()

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "DotNetCoreWCF.Grpc.Services";
+option csharp_namespace = "DotNetCoreWCF.GrpcSample.Services";
 
 package Greet;
 

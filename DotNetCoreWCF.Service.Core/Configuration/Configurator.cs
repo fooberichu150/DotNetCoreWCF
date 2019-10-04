@@ -11,7 +11,7 @@ namespace DotNetCoreWCF.Service.Core.Configuration
 {
 	public static class Configurator
 	{
-		public static IServiceCollection RegisterServices(this IServiceCollection services)
+		public static IServiceCollection RegisterHandlers(this IServiceCollection services)
 		{
 			services.AddTransient<IDeleteEmployeeRequestHandler, DeleteEmployeeRequestHandler>();
 			services.AddTransient<IGetEmployeeRequestHandler, GetEmployeeRequestHandler>();
@@ -22,7 +22,7 @@ namespace DotNetCoreWCF.Service.Core.Configuration
 			return services;
 		}
 
-		public static IUnityContainer RegisterServices(this IUnityContainer container)
+		public static IUnityContainer RegisterHandlers(this IUnityContainer container)
 		{
 			container.RegisterType<IDeleteEmployeeRequestHandler, DeleteEmployeeRequestHandler>(new HierarchicalLifetimeManager());
 			container.RegisterType<IGetEmployeeRequestHandler, GetEmployeeRequestHandler>(new HierarchicalLifetimeManager());

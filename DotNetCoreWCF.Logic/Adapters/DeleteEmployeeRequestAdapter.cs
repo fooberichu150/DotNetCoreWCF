@@ -12,14 +12,14 @@ namespace DotNetCoreWCF.Logic.Adapters
 
 		protected IMapper Mapper { get; }
 
-		public Contracts.Model.Employees.DeleteEmployeeRequest ToDomain(Grpc.Services.DeleteEmployeeRequest source)
+		public Contracts.Model.Employees.DeleteEmployeeRequest ToDomain(GrpcSample.Services.DeleteEmployeeRequest source)
 		{
 			return Mapper.Map<Contracts.Model.Employees.DeleteEmployeeRequest>(source);
 		}
 
-		public Grpc.Services.DeleteEmployeeRequest ToGrpc(Contracts.Model.Employees.DeleteEmployeeRequest source)
+		public GrpcSample.Services.DeleteEmployeeRequest ToGrpc(Contracts.Model.Employees.DeleteEmployeeRequest source)
 		{
-			return Mapper.Map<Grpc.Services.DeleteEmployeeRequest>(source);
+			return Mapper.Map<GrpcSample.Services.DeleteEmployeeRequest>(source);
 		}
 	}
 }
