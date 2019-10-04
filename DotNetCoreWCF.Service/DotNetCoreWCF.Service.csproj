@@ -92,6 +92,10 @@
     <Reference Include="System.ServiceModel.Primitives, Version=4.5.0.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ServiceModel.Primitives.4.5.3\lib\net461\System.ServiceModel.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -101,14 +105,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Abstractions.4.0.0\lib\net47\Unity.Abstractions.dll</HintPath>
+    <Reference Include="Unity.Abstractions, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.1\lib\net47\Unity.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Container, Version=5.9.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Container.5.9.0\lib\net47\Unity.Container.dll</HintPath>
+    <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.1\lib\net47\Unity.Container.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Wcf, Version=5.9.0.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Wcf.5.9.0\lib\net47\Unity.Wcf.dll</HintPath>
+    <Reference Include="Unity.Wcf, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Wcf.5.11.1\lib\net47\Unity.Wcf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -125,13 +129,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetCoreWCF.Data\DotNetCoreWCF.Services.Data.csproj">
-      <Project>{F1B37C38-7D77-48C5-BD8F-0B3127505A9B}</Project>
-      <Name>DotNetCoreWCF.Services.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DotNetCoreWCF.Model\DotNetCoreWCF.Model.csproj">
       <Project>{40e6aaa2-bb4d-4fd1-b923-4ba8faddd866}</Project>
       <Name>DotNetCoreWCF.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetCoreWCF.Proto\DotNetCoreWCF.Proto.csproj">
+      <Project>{9cb2e27d-b642-4826-adc6-b8da56790d7c}</Project>
+      <Name>DotNetCoreWCF.Proto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetCoreWCF.Service.Core\DotNetCoreWCF.Service.Core.csproj">
+      <Project>{577ea0c7-7589-4092-8ee3-f17068c3635d}</Project>
+      <Name>DotNetCoreWCF.Service.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

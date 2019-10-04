@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using DotNetCoreWCF.Contracts.Model.Employees;
 
-namespace DotNetCoreWCF.GrpcHost.Handlers
+namespace DotNetCoreWCF.Service.Core.Handlers
 {
-	public interface IGetEmployeeRequestHandler
+	public interface IUpdateEmployeeRequestHandler
 	{
-		EmployeeResponse Get(EmployeeRequest request);
+		Employee Update(Employee employee);
 	}
 }

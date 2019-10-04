@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
-using DotNetCoreWCF.Data.Store;
 using DotNetCoreWCF.Host.Services;
+using DotNetCoreWCF.Service.Core.Configuration;
+using DotNetCoreWCF.Service.Core.Store;
 using Unity;
 using Unity.Lifetime;
 
@@ -15,8 +16,10 @@ namespace DotNetCoreWCF.Host.Configuration
 	{
 		public static IUnityContainer ConfigureServices(this IUnityContainer container)
 		{
+			container
+				.RegisterServices();
+
 			container.RegisterType<IEmployeeService, EmployeeService>(new HierarchicalLifetimeManager());
-			container.RegisterType<IEmployeeStore, EmployeeStore>(new SingletonLifetimeManager());
 
 			return container;
 		}

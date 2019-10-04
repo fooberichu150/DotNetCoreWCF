@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetCoreWCF.Data\DotNetCoreWCF.Services.Data.csproj" />
     <ProjectReference Include="..\DotNetCoreWCF.Logic\DotNetCoreWCF.Logic.csproj" />
     <ProjectReference Include="..\DotNetCoreWCF.Proto\DotNetCoreWCF.Proto.csproj" />
+    <ProjectReference Include="..\DotNetCoreWCF.Service.Core\DotNetCoreWCF.Service.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using DotNetCoreWCF.Contracts.Model.Employees;
 
-namespace DotNetCoreWCF.Data.Store
+namespace DotNetCoreWCF.Service.Core.Store
 {
 	public interface IEmployeeStore
 	{

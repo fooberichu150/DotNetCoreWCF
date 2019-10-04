@@ -5,19 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetCoreWCF.Contracts.Interfaces;
 using DotNetCoreWCF.Contracts.Model.Employees;
-using DotNetCoreWCF.Data.Store;
+using DotNetCoreWCF.Service.Core.Store;
 using Microsoft.Extensions.Logging;
+using Unity;
 
 namespace DotNetCoreWCF.Host.Services
 {
 	public class EmployeeService : IEmployeeService
 	{
-		public EmployeeService(IEmployeeStore employeeStore, ILogger logger)
+		public EmployeeService(IUnityContainer container, IEmployeeStore employeeStore, ILogger logger)
 		{
+			Container = container;
 			EmployeeStore = employeeStore;
 			Logger = logger;
 		}
 
+		protected IUnityContainer Container { get; }
 		protected IEmployeeStore EmployeeStore { get; }
 		protected ILogger Logger { get; }
 

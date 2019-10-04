@@ -88,10 +88,10 @@
       <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Unity">
-      <Version>5.9.3</Version>
+      <Version>5.11.1</Version>
     </PackageReference>
     <PackageReference Include="Unity.Abstractions">
-      <Version>4.0.2</Version>
+      <Version>5.11.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

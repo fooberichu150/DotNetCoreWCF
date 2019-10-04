@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetCoreWCF.Data\DotNetCoreWCF.Services.Data.csproj" />
     <ProjectReference Include="..\DotNetCoreWCF.Model\DotNetCoreWCF.Model.csproj" />
     <ProjectReference Include="..\DotNetCoreWCF.Proto\DotNetCoreWCF.Proto.csproj" />
   </ItemGroup>

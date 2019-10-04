@@ -36,7 +36,7 @@ namespace DotNetCoreWCF.GrpcClient
 
 				services.AddTransient<Application>();
 				services
-					.ConfigureAdapters()
+					.RegisterAdapters()
 					.ConfigureLogging()
 					.RegisterEmployeeService(configuration);
 

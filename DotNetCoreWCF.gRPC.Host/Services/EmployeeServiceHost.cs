@@ -2,42 +2,42 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using DotNetCoreWCF.Contracts.Interfaces;
-using DotNetCoreWCF.Data.Store;
 using DotNetCoreWCF.Grpc.Services;
-using DotNetCoreWCF.GrpcHost.Handlers;
 using DotNetCoreWCF.Logic.Adapters;
+using DotNetCoreWCF.Service.Core.Handlers;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Models = DotNetCoreWCF.Contracts.Model.Employees;
 
 namespace DotNetCoreWCF.GrpcHost.Services
 {
 	public class EmployeeServiceHost : EmployeeService.EmployeeServiceBase//, IEmployeeService
 	{
 		public EmployeeServiceHost(ILogger<EmployeeServiceHost> logger, 
-			IServiceProvider serviceProvider,
-			IEmployeeStore employeeStore)
+			IServiceProvider serviceProvider)
 		{
 			ServiceProvider = serviceProvider;
 			Logger = logger;
-			EmployeeStore = employeeStore;
 		}
 
 		protected ILogger<EmployeeServiceHost> Logger { get; }
 		protected IServiceProvider ServiceProvider { get; }
 
 		protected IGetEmployeeRequestHandler EmployeeRequestHandler { get; }
-		protected IEmployeeStore EmployeeStore { get; }
 		protected IMapper Mapper { get; }
 
 		public override Task<DeleteEmployeeResponse> Delete(DeleteEmployeeRequest request, ServerCallContext context)
 		{
-			var mappedRequest = Mapper.Map<Models.DeleteEmployeeRequest>(request);
-			var response = (this as IEmployeeService).Delete(mappedRequest);
+			using (var scope = ServiceProvider.CreateScope())
+			{
+				var handler = scope.ServiceProvider.GetRequiredService<IDeleteEmployeeRequestHandler>();
+				var requestAdapter = scope.ServiceProvider.GetRequiredService<IDeleteEmployeeRequestAdapter>();
+				var responseAdapter = scope.ServiceProvider.GetRequiredService<IDeleteEmployeeResponseAdapter>();
 
-			return Task.FromResult(Mapper.Map<DeleteEmployeeResponse>(response));
+				var employees = handler.Delete(requestAdapter.ToDomain(request));
+
+				return Task.FromResult(responseAdapter.ToGrpc(employees));
+			}
 		}
 
 		public override Task<EmployeeResponse> Get(EmployeeRequest request, ServerCallContext context)
@@ -56,32 +56,15 @@ namespace DotNetCoreWCF.GrpcHost.Services
 
 		public override Task<Employee> UpdateEmployee(Employee request, ServerCallContext context)
 		{
-			var mappedRequest = Mapper.Map<Models.Employee>(request);
-			var response = (this as IEmployeeService).UpdateEmployee(mappedRequest);
+			using (var scope = ServiceProvider.CreateScope())
+			{
+				var handler = scope.ServiceProvider.GetRequiredService<IUpdateEmployeeRequestHandler>();
+				var requestAdapter = scope.ServiceProvider.GetRequiredService<IEmployeeAdapter>();
 
-			return Task.FromResult(Mapper.Map<Employee>(response));
+				var employees = handler.Update(requestAdapter.ToDomain(request));
+
+				return Task.FromResult(requestAdapter.ToGrpc(employees));
+			}
 		}
-
-		//Models.DeleteEmployeeResponse IEmployeeService.Delete(Models.DeleteEmployeeRequest request)
-		//{
-		//	var deletedEmployee = EmployeeStore.Delete(request.EmployeeId);
-
-		//	return new Models.DeleteEmployeeResponse
-		//	{
-		//		DeletedEmployeeId = deletedEmployee?.EmployeeId
-		//	};
-
-		//	throw new System.NotImplementedException();
-		//}
-
-		//Models.EmployeeResponse IEmployeeService.Get(Models.EmployeeRequest request)
-		//{
-		//	throw new NotImplementedException();
-		//}
-
-		//Models.Employee IEmployeeService.UpdateEmployee(Models.Employee employee)
-		//{
-		//	throw new NotImplementedException();
-		//}
 	}
 }
