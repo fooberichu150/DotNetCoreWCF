@@ -13,6 +13,7 @@ namespace DotNetCoreWCF.Client
 		{
 			_logger = logger;
 			_demoAccessor = demoAccessor;
+            //This is test
 		}
 
 		public void Run()
